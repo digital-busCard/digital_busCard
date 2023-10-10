@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_passenger_table
+      author: chayakorn.k
+      changes:
+        - createTable:
+            tableName: passenger
+            columns:
+              - column:
+                  name: passenger_seqnum
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: passenger_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expire_date
+                  type: date
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: insert_few_info
+      author: chayakorn.k
+      changes:
+        - insert:
+            tableName: passenger
+            columns:
+              - column:
+                  name: passenger_id
+                  value: "1001"
+              - column:
+                  name: expire_date
+                  value: "2024-01-01"

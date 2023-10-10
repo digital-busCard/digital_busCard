@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  grp-bus-server:
+    platform: linux/x86_64
+    image: 'grp-bus-server:latest'
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+    container_name: grp-bus-server
+    depends_on:
+      - grp-bus-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://grp-bus-db:5432/grp-bus-db
+      SPRING_DATASOURCE_USERNAME: local
+      SPRING_DATASOURCE_PASSWORD: local
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: local
+
+  grp-bus-db:
+    image: 'postgres:13.1-alpine'
+    ports:
+      - '5432:5432'
+    container_name: grp-bus-db
+    environment:
+      POSTGRES_DB: grp-bus-db
+      POSTGRES_USER: local
+      POSTGRES_PASSWORD: local
+    volumes:
+      - grp-bus-db:/var/lib/postgres/
+volumes:
+  grp-bus-db:
+    driver: local
