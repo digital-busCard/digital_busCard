@@ -1,9 +1,9 @@
 
-# CHK - Java 11 with Postgres Template
+# GRP - Bus Server Service
 
 ..
 
-Last Updated: ...
+Last Updated: 17 Oct 23
 
 
 ## Authors
@@ -22,6 +22,14 @@ Last Updated: ...
 **Database:**
 ```
 - Postgres 13.1 alpine
+```
+
+**Run Local**
+
+To run locally, please install necessary components becore running the command line below.
+```
+./gradlew clean build
+docker compose up
 ```
 
 
