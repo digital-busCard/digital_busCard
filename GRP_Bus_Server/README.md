@@ -9,6 +9,7 @@ Last Updated: 17 Oct 23
 ## Authors
 
 - [@p-chk](https://www.github.com/p-chk) - Chayakorn K.
+- Dinesh D.
 
 
 ## Tech Stack
