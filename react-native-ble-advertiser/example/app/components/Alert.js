@@ -1,18 +1,13 @@
-export const submitAlert = (uuids) => {
+async function submitAlert (uuids) {
     this.setState({
         fromFetch: false,
         loading: true,
 
     })
-    axios.get("https://localhost:8080/api/v1")
+    axios.post("https://grp-bus-server-dev.onrender.com/api/v1/passengers/",
+                uuids)
         .then(response => {
-            console.log('getting data from axios', response.data);
-            setTimeout(() => {
-                this.setState({
-                    loading: false,
-                    axiosData: response.data
-                })
-            }, 2000)
+            console.log(response)
         })
         .catch(error => {
             console.log(error);

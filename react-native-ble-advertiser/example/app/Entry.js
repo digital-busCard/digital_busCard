@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 
 import {
   Alert,
@@ -19,6 +19,7 @@ import UUIDGenerator from 'react-native-uuid-generator';
 import {PermissionsAndroid} from 'react-native';
 import {useQuery} from "@realm/react";
 import { Passenger } from '../App';
+import { submitAlert } from './components/Alert';
 
 // Uses the Apple code to pick up iPhones
 const APPLE_ID = 0x4c;
@@ -78,15 +79,16 @@ export async function requestLocationPermission() {
   }
 }
 
-function authenticate(events) {
+
+async function authenticate(events) {
   nonTimedOutEvents = events.filter((event) => {
     !isTimedOut(event)
   })
   authenticatedEvents = validate(nonTimedOutEvents)
   timeOut(authenticatedEvents)
-  alert(authenticatedEvents)
+  await alert(authenticatedEvents)
 }
-const items = realm.objects("Item");
+const items = realm.objects("Passenger");
 
 function isTimedOut(event) {
   if (event.expire != null && event.expire > new Date()) {
@@ -102,8 +104,12 @@ function validate(events) {
   })
 }
 
-function alert(events) {
-//eq
+async function alert(uuids) {
+  const toSubmit = {
+    passengerId: uuids,
+    bus: "10"
+  }
+  await submitAlert(toSubmit)
 }
 
 function timeOut(events) {
@@ -111,7 +117,7 @@ function timeOut(events) {
     const expire = new Date();
     expire.setMinutes(expire.getMinutes + 30);
 
-    const index = this.state.devicesFound.findIndex(({uuid}) => uuid === _uuid);
+    const index = this.state.devicesFound.findIndex(({uuid}) => uuid === event.uuid);
     this.setState({
       devicesFound: update(this.state.devicesFound, {
         [index]: {
@@ -131,6 +137,12 @@ class Entry extends Component {
       isLogging: false,
       devicesFound: [],
     };
+  }
+
+  while (True) {
+    console.log("authenticate")
+    authenticate(this.state.devicesFound);
+    setTimeout(() => {  console.log('waited 1 sec'); }, 1000);
   }
 
   addDevice(_uuid, _name, _mac, _rssi, _date) {
@@ -254,7 +266,7 @@ class Entry extends Component {
       <SafeAreaView>
         <View style={styles.body}>
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>BLE Advertiser Demo</Text>
+            <Text style={styles.sectionTitle}>GRP BUS Receveiver</Text>
             <Text style={styles.sectionDescription}>
               Broadcasting:{' '}
               <Text style={styles.highlight}>
@@ -281,6 +293,19 @@ class Entry extends Component {
 
           <View style={styles.sectionContainerFlex}>
             <Text style={styles.sectionTitle}>Devices Around</Text>
+            <FlatList
+              data={this.state.devicesFound}
+              renderItem={({item}) => (
+                <Text style={styles.itemPastConnections}>
+                  {(item.uuid)} {item.mac} {item.rssi}
+                </Text>
+              )}
+              keyExtractor={(item) => item.uuid}
+            />
+          </View>
+
+          <View style={styles.sectionContainerFlex}>
+            <Text style={styles.sectionTitle}>Devices Authenticated Around</Text>
             <FlatList
               data={this.state.devicesFound}
               renderItem={({item}) => (
