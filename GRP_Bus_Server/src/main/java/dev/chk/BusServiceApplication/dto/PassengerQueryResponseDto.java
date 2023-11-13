@@ -15,4 +15,5 @@ public class PassengerQueryResponseDto {
     private String passengerId;
     private String status;
     private String expireDate;
+    private String bus;
 }

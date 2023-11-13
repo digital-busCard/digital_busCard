@@ -17,12 +17,15 @@ import update from 'immutability-helper';
 import BLEAdvertiser from 'react-native-ble-advertiser';
 import UUIDGenerator from 'react-native-uuid-generator';
 import {PermissionsAndroid} from 'react-native';
+import {useQuery} from "@realm/react";
+import { Passenger } from '../App';
 
 // Uses the Apple code to pick up iPhones
 const APPLE_ID = 0x4c;
 const MANUF_DATA = [1, 0];
 // No scanner filters (finds all devices inc iPhone). Use UUID suffix to filter scans if using.
 const SCAN_MANUF_DATA = Platform.OS === 'android' ? null : MANUF_DATA;
+const passengers = useQuery(Passenger)
 
 BLEAdvertiser.setCompanyId(APPLE_ID);
 
@@ -75,6 +78,51 @@ export async function requestLocationPermission() {
   }
 }
 
+function authenticate(events) {
+  nonTimedOutEvents = events.filter((event) => {
+    !isTimedOut(event)
+  })
+  authenticatedEvents = validate(nonTimedOutEvents)
+  timeOut(authenticatedEvents)
+  alert(authenticatedEvents)
+}
+const items = realm.objects("Item");
+
+function isTimedOut(event) {
+  if (event.expire != null && event.expire > new Date()) {
+    return true
+  }
+}
+
+function validate(events) {
+  return events.filter((event) => {
+    if (passengers.find((passenger) => passenger.uuid == event.uuid) != undefined) {
+      return true
+    } 
+  })
+}
+
+function alert(events) {
+//eq
+}
+
+function timeOut(events) {
+  events.map((event) => {
+    const expire = new Date();
+    expire.setMinutes(expire.getMinutes + 30);
+
+    const index = this.state.devicesFound.findIndex(({uuid}) => uuid === _uuid);
+    this.setState({
+      devicesFound: update(this.state.devicesFound, {
+        [index]: {
+          expire: expire
+        },
+      }),
+    });
+  });
+  
+}
+
 class Entry extends Component {
   constructor(props) {
     super(props);
@@ -98,6 +146,7 @@ class Entry extends Component {
               rssi: _rssi,
               start: _date,
               end: _date,
+              expire: null,
             },
           ],
         }),
@@ -134,8 +183,6 @@ class Entry extends Component {
     const eventEmitter = new NativeEventEmitter(NativeModules.BLEAdvertiser);
 
     this.onDeviceFound = eventEmitter.addListener('onDeviceFound', (event) => {
-      //console.log('onDeviceFound', event);
-      console.log(event)
       if (event.serviceUuids) {
         for (let i = 0; i < event.serviceUuids.length; i++) {
           if (event.serviceUuids[i] && event.serviceUuids[i].endsWith('00')) {

@@ -2,6 +2,7 @@ package dev.chk.BusServiceApplication.controller;
 
 import dev.chk.BusServiceApplication.dto.PassengerQueryDto;
 import dev.chk.BusServiceApplication.dto.PassengerQueryResponseDto;
+import dev.chk.BusServiceApplication.dto.ResponseDto;
 import dev.chk.BusServiceApplication.service.PassengerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,7 @@ public class PassengerController {
     private final PassengerService passengerService;
 
     @PostMapping(path = "/passenger")
-    public PassengerQueryResponseDto verifyPassenger(@RequestBody PassengerQueryDto passengerQueryDto) {
-        return passengerService.verifyPassengerIdentity(passengerQueryDto);
+    public ResponseDto verifyPassenger(@RequestBody PassengerQueryDto passengerQueryDto) {
+        return passengerService.verifyPassengersIdentity(passengerQueryDto);
     }
 }

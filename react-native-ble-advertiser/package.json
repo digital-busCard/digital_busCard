@@ -23,7 +23,8 @@
         "react-native": ">=0.50"
     },
     "dependencies": {
-        "react-native-ble-advertiser": "^0.0.17"
+        "react-native-ble-advertiser": "^0.0.17",
+        "realm": "^12.3.0"
     },
     "files": [
         "android/",

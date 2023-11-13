@@ -6,11 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @Data
 @JsonAutoDetect
 @NoArgsConstructor
 @AllArgsConstructor
 public class PassengerQueryDto {
-    private String passengerId;
+    private List<String> passengerId;
+    private String bus;
 }
