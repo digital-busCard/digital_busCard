@@ -12,6 +12,7 @@ services:
     depends_on:
       - grp-bus-db
     environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://grp-bus-db:5432/grp-bus-db
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_PROFILES_ACTIVE: local
 

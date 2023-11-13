@@ -23,7 +23,6 @@ logging:
   level:
     root: info
 ---
----
 spring:
   config:
     activate:
