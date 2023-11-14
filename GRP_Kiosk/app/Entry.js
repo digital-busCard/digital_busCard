@@ -17,16 +17,20 @@ import update from 'immutability-helper';
 import BLEAdvertiser from 'react-native-ble-advertiser';
 import UUIDGenerator from 'react-native-uuid-generator';
 import {PermissionsAndroid} from 'react-native';
-import {useQuery} from "@realm/react";
-import { Passenger } from '../App';
+import { useQuery } from '@realm/react';
+import { Passenger, getPassenger } from './components/Passenger';
 import { submitAlert } from './components/Alert';
+import { useState } from 'react';
+import { Client } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
+
 
 // Uses the Apple code to pick up iPhones
 const APPLE_ID = 0x4c;
 const MANUF_DATA = [1, 0];
 // No scanner filters (finds all devices inc iPhone). Use UUID suffix to filter scans if using.
 const SCAN_MANUF_DATA = Platform.OS === 'android' ? null : MANUF_DATA;
-const passengers = useQuery(Passenger)
+
 
 BLEAdvertiser.setCompanyId(APPLE_ID);
 
@@ -79,90 +83,130 @@ export async function requestLocationPermission() {
   }
 }
 
+class Entry extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      uuid: '7eb096d2-8268-11ee-b962-0242ac120000',
+      isLogging: false,
+      devicesFound: [],
+      isConnected: false
+    };
+  }
 
-async function authenticate(events) {
-  nonTimedOutEvents = events.filter((event) => {
-    !isTimedOut(event)
-  })
-  authenticatedEvents = validate(nonTimedOutEvents)
-  timeOut(authenticatedEvents)
-  await alert(authenticatedEvents)
+ 
+stompClient;
+
+
+connect = () => {
+  console.log("connecting.")
+  if (!this.state.isConnected) {
+    console.log("connecting.")
+    this.stompClient = new Client({
+      brokerURL: 'https://grp-bus-server-dev.onrender.com/stream?token=kiosk1',
+      onConnect: () => this.onConnected(),
+    })
+    this.stompClient.activate();
+    console.log("check stat " + this.stompClient.status)
+  }
 }
-const items = realm.objects("Passenger");
 
-function isTimedOut(event) {
+onConnected = () => {
+  console.log("onConnected");
+  this.state.isConnected = true
+  console.log("check stat " + this.stompClient.status)
+  // Subscribe to the Public Topic
+  this.stompClient.subscribe("user/topic/passengers", (messeage) => {console.log("message " + messeage)});
+}
+
+authenticate(event) {
+  console.log("in authenticate " + event.uuid)
+  console.log(this.state.isConnected)
+  if (this.state.isConnected) {
+    console.log("is connect")
+    // if (!this.isTimedOut(event)) {
+    //   console.log("timeout" + event.uuid)
+    //   return
+    // }
+    console.log("not timedout")
+    authenticatedEvent = this.validate(event)
+    this.timeOut(authenticatedEvent)
+    this.alert(authenticatedEvent)
+  }
+}
+
+
+isTimedOut(event) {
   if (event.expire != null && event.expire > new Date()) {
     return true
   }
 }
 
-function validate(events) {
-  return events.filter((event) => {
-    if (passengers.find((passenger) => passenger.uuid == event.uuid) != undefined) {
-      return true
-    } 
+validate(event) {
+  console.log("validate..")
+  passengers = getPassenger();
+  passengers.forEach((passenger) => {
+    console.log(passenger)
+    console.log(passenger.uuid.toUpperCase() + "=" + event.uuid.toUpperCase())
+    if (passenger.uuid.toUpperCase() === event.uuid.toUpperCase()) {
+      console.log("return "+passenger.uuid)
+      this.validatedPassenger = passenger;
+    }
   })
+  return this.validatedPassenger;
 }
 
-async function alert(uuids) {
+alert(event) {
   const toSubmit = {
-    passengerId: uuids,
+    passengerId: [event.uuid],
     bus: "10"
   }
-  await submitAlert(toSubmit)
+  console.log("constructing payload " + toSubmit.passengerId.toString())
+  submitAlert(this.stompClient, toSubmit)
 }
 
-function timeOut(events) {
-  events.map((event) => {
-    const expire = new Date();
-    expire.setMinutes(expire.getMinutes + 30);
-
-    const index = this.state.devicesFound.findIndex(({uuid}) => uuid === event.uuid);
-    this.setState({
-      devicesFound: update(this.state.devicesFound, {
-        [index]: {
-          expire: expire
-        },
-      }),
-    });
+timeOut(event) {
+  console.log("timeout")
+  console.log(event)
+  const expire = new Date();
+  console.log(expire)
+  expire.setMinutes(expire.getMinutes() + 30);
+  const index = this.state.devicesFound.findIndex(({uuid}) => uuid.toUpperCase() === event.uuid.toUpperCase());
+  console.log(this.state.devicesFound)
+  console.log("changing value " + index)
+  console.log(expire)
+  this.setState({
+    devicesFound: update(this.state.devicesFound, {
+      [index]: {
+        expire: {$set: expire}
+      },
+    }),
   });
-  
+  console.log(this.state.devicesFound[index]);
 }
-
-class Entry extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      uuid: '',
-      isLogging: false,
-      devicesFound: [],
-    };
-  }
-
-  while (True) {
-    console.log("authenticate")
-    authenticate(this.state.devicesFound);
-    setTimeout(() => {  console.log('waited 1 sec'); }, 1000);
-  }
 
   addDevice(_uuid, _name, _mac, _rssi, _date) {
     const index = this.state.devicesFound.findIndex(({uuid}) => uuid === _uuid);
     if (index < 0) {
+      let newDev = {
+        uuid: _uuid,
+        name: _name,
+        mac: _mac,
+        rssi: _rssi,
+        start: _date,
+        end: _date,
+        expire: null,
+      };
+
       this.setState({
         devicesFound: update(this.state.devicesFound, {
           $push: [
-            {
-              uuid: _uuid,
-              name: _name,
-              mac: _mac,
-              rssi: _rssi,
-              start: _date,
-              end: _date,
-              expire: null,
-            },
+            newDev
           ],
         }),
       });
+      console.log("authenticate");
+      this.authenticate(newDev);
     } else {
       this.setState({
         devicesFound: update(this.state.devicesFound, {
@@ -179,7 +223,8 @@ class Entry extends Component {
     requestLocationPermission();
     UUIDGenerator.getRandomUUID((newUid) => {
       this.setState({
-        uuid: newUid.slice(0, -2) + '00',
+        uuid: '7eb096d2-8268-11ee-b962-0242ac120000',
+        isConnected: false
       });
     });
   }
@@ -191,6 +236,8 @@ class Entry extends Component {
   }
 
   start() {
+    console.log("stomp connection.. " + this.stompClient)
+    this.connect();
     console.log(this.state.uuid, 'Registering Listener');
     const eventEmitter = new NativeEventEmitter(NativeModules.BLEAdvertiser);
 
@@ -211,15 +258,15 @@ class Entry extends Component {
     });
 
     console.log(this.state.uuid, 'Starting Advertising');
-    BLEAdvertiser.broadcast(this.state.uuid, MANUF_DATA, {
+    BLEAdvertiser.broadcast('7eb096d2-8268-11ee-b962-0242ac120000', MANUF_DATA, {
       advertiseMode: BLEAdvertiser.ADVERTISE_MODE_BALANCED,
       txPowerLevel: BLEAdvertiser.ADVERTISE_TX_POWER_LOW,
       connectable: false,
       includeDeviceName: false,
       includeTxPowerLevel: false,
     })
-      .then((sucess) => console.log(this.state.uuid, 'Adv Successful', sucess))
-      .catch((error) => console.log(this.state.uuid, 'Adv Error', error));
+      .then((sucess) => console.log('7eb096d2-8268-11ee-b962-0242ac120000', 'Adv Successful', sucess))
+      .catch((error) => console.log('7eb096d2-8268-11ee-b962-0242ac120000', 'Adv Error', error));
 
     console.log(this.state.uuid, 'Starting Scanner');
     BLEAdvertiser.scan(SCAN_MANUF_DATA, {
@@ -251,6 +298,7 @@ class Entry extends Component {
     this.setState({
       isLogging: false,
     });
+    this.connect();
   }
 
   short(str) {
@@ -309,9 +357,11 @@ class Entry extends Component {
             <FlatList
               data={this.state.devicesFound}
               renderItem={({item}) => (
+                item.expire != null ?
                 <Text style={styles.itemPastConnections}>
                   {(item.uuid)} {item.mac} {item.rssi}
                 </Text>
+                : null
               )}
               keyExtractor={(item) => item.uuid}
             />

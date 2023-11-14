@@ -2,12 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/vitor/Documents/workspace/react-native-ble-advertiser/example/ios/BLEAdvertiserExample.xcodeproj">
+      location = "group:/Users/vitor/Documents/workspace/react-native-ble-advertiser/example/ios/BusKiosk.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:BLEAdvertiserExample.xcodeproj">
+      location = "group:BusKiosk.xcodeproj">
    </FileRef>
 </Workspace>
