@@ -227,6 +227,7 @@ timeOut(event) {
         isConnected: false
       });
     });
+    this.connect();
   }
 
   componentWillUnmount() {
