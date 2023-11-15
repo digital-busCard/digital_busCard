@@ -2,7 +2,9 @@ package dev.chk.BusServiceApplication.service.impl;
 
 import dev.chk.BusServiceApplication.dto.PassengerQueryDto;
 import dev.chk.BusServiceApplication.dto.PassengerQueryResponseDto;
+import dev.chk.BusServiceApplication.dto.PassengerVerificationDto;
 import dev.chk.BusServiceApplication.dto.ResponseDto;
+import dev.chk.BusServiceApplication.model.Passenger;
 import dev.chk.BusServiceApplication.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,32 +25,40 @@ public class NotificationServiceImpl implements NotificationService {
 
     public ResponseDto submitPassengerAlerts(final PassengerQueryDto dto) {
         List<PassengerQueryResponseDto> passengers = new ArrayList<>();
-        for (String passengerId : dto.getPassengerId()) {
-            processPassenger(dto.getBus(), passengers, passengerId);
+        for (PassengerVerificationDto passenger : dto.getPassengers()) {
+            processPassenger(dto.getBus(), passengers, passenger);
         }
         return ResponseDto.builder().passengers(passengers).status(OK).timeStamp(LocalDateTime.now()).build();
     }
 
-    private void processPassenger(final String bus, List<PassengerQueryResponseDto> passengers, final String passengerId) {
+    private void processPassenger(final String bus, List<PassengerQueryResponseDto> passengers, final PassengerVerificationDto passenger) {
         try {
-            submitPassengerAlert(bus, passengerId);
+            submitPassengerAlert(bus, passenger);
             passengers.add(PassengerQueryResponseDto.builder()
-                    .passengerId(passengerId)
+                    .passengerId(passenger.getPassengerId())
                     .status(PASS)
                     .build());
         } catch (Exception ex) {
-            log.error("--BUS {}--Submitting to passenger {} error due to {}", bus, passengerId, ex.getMessage());
+            log.error("--BUS {}--Submitting to passenger {} error due to {}", bus, passenger.getPassengerId(), ex.getMessage());
             passengers.add(PassengerQueryResponseDto.builder()
-                    .passengerId(passengerId)
+                    .passengerId(passenger.getPassengerId())
                     .status(FAIL)
                     .build());
         }
     }
 
-    private void submitPassengerAlert(final String bus, final String userId) {
-        log.info("--BUS {}-- Submitting to passenger {}", bus, userId);
+    private void submitPassengerAlert(final String bus, final PassengerVerificationDto passenger) {
+        log.info("--BUS {}-- Submitting to passenger {}", bus, passenger.getPassengerId());
         PassengerQueryResponseDto user =
-                PassengerQueryResponseDto.builder().bus(bus).passengerId(userId).status(OK).build();
-        messagingTemplate.convertAndSendToUser(userId, TOPIC, user);
+                PassengerQueryResponseDto.builder()
+                        .bus(bus)
+                        .verification(passenger.getVerification())
+                        .passengerId(passenger.getPassengerId()).status(OK).build();
+        messagingTemplate.convertAndSendToUser(passenger.getPassengerId(), TOPIC_VERIFIED_PASSENGER, user);
+    }
+
+    public void submitNewPassenger(final Passenger dto) {
+        log.info("Sharing new passenger detail {}", dto.getPassengerId());
+        messagingTemplate.convertAndSend(TOPIC_NEW_PASSENGER, dto);
     }
 }

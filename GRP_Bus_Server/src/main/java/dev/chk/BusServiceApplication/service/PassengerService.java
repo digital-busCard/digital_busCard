@@ -1,11 +1,10 @@
 package dev.chk.BusServiceApplication.service;
 
-import dev.chk.BusServiceApplication.dto.PassengerQueryDto;
-import dev.chk.BusServiceApplication.dto.PassengerQueryResponseDto;
-import dev.chk.BusServiceApplication.dto.ResponseDto;
+import dev.chk.BusServiceApplication.dto.*;
 
 import java.util.List;
 
 public interface PassengerService {
     ResponseDto verifyPassengersIdentity(PassengerQueryDto query);
+    PassengerResponseDto createNewPassenger(PassengerRequestDto passengerRequestDto);
 }

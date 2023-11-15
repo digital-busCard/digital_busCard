@@ -1,6 +1,7 @@
 package dev.chk.BusServiceApplication.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PassengerQueryDto {
-    private List<String> passengerId;
+    private List<PassengerVerificationDto> passengers;
     private String bus;
 }

@@ -1,6 +1,7 @@
 package dev.chk.BusServiceApplication.mapper;
 
 import dev.chk.BusServiceApplication.dto.PassengerQueryResponseDto;
+import dev.chk.BusServiceApplication.dto.PassengerResponseDto;
 import dev.chk.BusServiceApplication.model.Passenger;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-13T10:02:15-0600",
+    date = "2023-11-14T19:46:40-0600",
     comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.1.jar, environment: Java 11.0.15 (Eclipse Adoptium)"
 )
 @Component
@@ -46,5 +47,21 @@ public class PassengerMapperImpl implements PassengerMapper {
         }
 
         return list;
+    }
+
+    @Override
+    public PassengerResponseDto passengerToPassengerResponseDto(Passenger passenger) {
+        if ( passenger == null ) {
+            return null;
+        }
+
+        PassengerResponseDto.PassengerResponseDtoBuilder passengerResponseDto = PassengerResponseDto.builder();
+
+        passengerResponseDto.passengerId( passenger.getPassengerId() );
+        if ( passenger.getExpireDate() != null ) {
+            passengerResponseDto.expireDate( DateTimeFormatter.ISO_LOCAL_DATE.format( passenger.getExpireDate() ) );
+        }
+
+        return passengerResponseDto.build();
     }
 }
