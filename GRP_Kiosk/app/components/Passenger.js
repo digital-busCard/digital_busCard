@@ -12,6 +12,17 @@ export class Passenger extends Realm.Object {
   }
 
   export function getPassenger() {
-    // passengers = useQuery(Passenger);
     return realm.objects("Passenger");
   }
+
+  export function createPassenger (passenger) {
+    console.log("adding passenger")
+    realm.write(() => {
+      realm.create('Passenger', {
+        uuid: passenger.passengerId,
+        expireDate: passenger.expireDate,
+        update: true
+      });
+      console.log(realm.objects("Passenger"))
+    });
+  };  

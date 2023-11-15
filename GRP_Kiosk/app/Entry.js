@@ -17,12 +17,9 @@ import update from 'immutability-helper';
 import BLEAdvertiser from 'react-native-ble-advertiser';
 import UUIDGenerator from 'react-native-uuid-generator';
 import {PermissionsAndroid} from 'react-native';
-import { useQuery } from '@realm/react';
-import { Passenger, getPassenger } from './components/Passenger';
+import { createPassenger, getPassenger } from './components/Passenger';
 import { submitAlert } from './components/Alert';
-import { useState } from 'react';
 import { Client } from '@stomp/stompjs';
-import SockJS from 'sockjs-client';
 
 
 // Uses the Apple code to pick up iPhones
@@ -90,7 +87,8 @@ class Entry extends Component {
       uuid: '7eb096d2-8268-11ee-b962-0242ac120000',
       isLogging: false,
       devicesFound: [],
-      isConnected: false
+      isConnected: false,
+      passengerCount: 0
     };
   }
 
@@ -116,7 +114,10 @@ onConnected = () => {
   this.state.isConnected = true
   console.log("check stat " + this.stompClient.status)
   // Subscribe to the Public Topic
-  this.stompClient.subscribe("user/topic/passengers", (messeage) => {console.log("message " + messeage)});
+  this.stompClient.subscribe("/topic/new-passenger", (messeage) => {
+    console.log("message " + messeage)
+    createPassenger(messeage)
+  });
 }
 
 authenticate(event) {
@@ -130,6 +131,10 @@ authenticate(event) {
     // }
     console.log("not timedout")
     authenticatedEvent = this.validate(event)
+    authenticatedEvent.verification = this.state.passengerCount + 1
+    this.setState({
+      passengerCount: {$set: (authenticatedEvent.verification)}
+    })
     this.timeOut(authenticatedEvent)
     this.alert(authenticatedEvent)
   }
@@ -149,7 +154,7 @@ validate(event) {
     console.log(passenger)
     console.log(passenger.uuid.toUpperCase() + "=" + event.uuid.toUpperCase())
     if (passenger.uuid.toUpperCase() === event.uuid.toUpperCase()) {
-      console.log("return "+passenger.uuid)
+      console.log("return " + passenger.uuid)
       this.validatedPassenger = passenger;
     }
   })
@@ -157,8 +162,12 @@ validate(event) {
 }
 
 alert(event) {
+  
   const toSubmit = {
-    passengerId: [event.uuid],
+    passengers: [{
+      passengerId: event.uuid,
+      verification: event.verification
+    }],
     bus: "10"
   }
   console.log("constructing payload " + toSubmit.passengerId.toString())
