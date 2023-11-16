@@ -87,31 +87,28 @@ class Entry extends Component {
       uuid: '7eb096d2-8268-11ee-b962-0242ac120000',
       isLogging: false,
       devicesFound: [],
-      isConnected: false,
       passengerCount: 0
     };
   }
 
  
-stompClient;
 
 
 connect = () => {
   console.log("connecting.")
-  if (!this.state.isConnected) {
+  if (!this.stompClient.connected()) {
     console.log("connecting.")
     this.stompClient = new Client({
       brokerURL: 'https://grp-bus-server-dev.onrender.com/stream?token=kiosk1',
       onConnect: () => this.onConnected(),
     })
     this.stompClient.activate();
-    console.log("check stat " + this.stompClient.status)
+    console.log("check stat " + this.stompClient.connected())
   }
 }
 
 onConnected = () => {
   console.log("onConnected");
-  this.state.isConnected = true
   console.log("check stat " + this.stompClient.status)
   // Subscribe to the Public Topic
   this.stompClient.subscribe("/topic/new-passenger", (messeage) => {
@@ -135,7 +132,10 @@ authenticate(event) {
     this.setState({
       passengerCount: {$set: (authenticatedEvent.verification)}
     })
-    this.timeOut(authenticatedEvent)
+    this.setState({
+      passengerCount: {$set: (authenticatedEvent.verification)}
+    })
+    this.timeOut(authenticatedEvent, authenticatedEvent.verification)
     this.alert(authenticatedEvent)
   }
 }
@@ -162,7 +162,6 @@ validate(event) {
 }
 
 alert(event) {
-  
   const toSubmit = {
     passengers: [{
       passengerId: event.uuid,
@@ -174,7 +173,7 @@ alert(event) {
   submitAlert(this.stompClient, toSubmit)
 }
 
-timeOut(event) {
+timeOut(event, verification) {
   console.log("timeout")
   console.log(event)
   const expire = new Date();
@@ -187,7 +186,8 @@ timeOut(event) {
   this.setState({
     devicesFound: update(this.state.devicesFound, {
       [index]: {
-        expire: {$set: expire}
+        expire: {$set: expire},
+        verification: {$set: verification}
       },
     }),
   });
@@ -254,7 +254,7 @@ timeOut(event) {
     this.onDeviceFound = eventEmitter.addListener('onDeviceFound', (event) => {
       if (event.serviceUuids) {
         for (let i = 0; i < event.serviceUuids.length; i++) {
-          if (event.serviceUuids[i] && event.serviceUuids[i].endsWith('00')) {
+          if (event.serviceUuids[i] && event.rssi < 40) {
             this.addDevice(
               event.serviceUuids[i],
               event.deviceName,
@@ -366,10 +366,11 @@ timeOut(event) {
             <Text style={styles.sectionTitle}>Devices Authenticated Around</Text>
             <FlatList
               data={this.state.devicesFound}
+              inverted={true}
               renderItem={({item}) => (
                 item.expire != null ?
                 <Text style={styles.itemPastConnections}>
-                  {(item.uuid)} {item.mac} {item.rssi}
+                  {(item.uuid)} {item.verification} {item.rssi} 
                 </Text>
                 : null
               )}
