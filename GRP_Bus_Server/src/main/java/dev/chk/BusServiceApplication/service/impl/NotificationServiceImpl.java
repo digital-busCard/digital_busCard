@@ -2,18 +2,14 @@ package dev.chk.BusServiceApplication.service.impl;
 
 import dev.chk.BusServiceApplication.dto.PassengerQueryDto;
 import dev.chk.BusServiceApplication.dto.PassengerQueryResponseDto;
-import dev.chk.BusServiceApplication.dto.PassengerVerificationDto;
-import dev.chk.BusServiceApplication.dto.ResponseDto;
 import dev.chk.BusServiceApplication.model.Passenger;
 import dev.chk.BusServiceApplication.service.NotificationService;
+import dev.chk.BusServiceApplication.service.PassengerNotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import static dev.chk.BusServiceApplication.constant.PassengerConstant.*;
 
@@ -23,38 +19,25 @@ import static dev.chk.BusServiceApplication.constant.PassengerConstant.*;
 public class NotificationServiceImpl implements NotificationService {
     private final SimpMessagingTemplate messagingTemplate;
 
-    public ResponseDto submitPassengerAlerts(final PassengerQueryDto dto) {
-        List<PassengerQueryResponseDto> passengers = new ArrayList<>();
-        for (PassengerVerificationDto passenger : dto.getPassengers()) {
-            processPassenger(dto.getBus(), passengers, passenger);
-        }
-        return ResponseDto.builder().passengers(passengers).status(OK).timeStamp(LocalDateTime.now()).build();
-    }
+    private final PassengerNotificationService passengerNotificationService;
 
-    private void processPassenger(final String bus, List<PassengerQueryResponseDto> passengers, final PassengerVerificationDto passenger) {
-        try {
-            submitPassengerAlert(bus, passenger);
-            passengers.add(PassengerQueryResponseDto.builder()
-                    .passengerId(passenger.getPassengerId())
-                    .status(PASS)
-                    .build());
-        } catch (Exception ex) {
-            log.error("--BUS {}--Submitting to passenger {} error due to {}", bus, passenger.getPassengerId(), ex.getMessage());
-            passengers.add(PassengerQueryResponseDto.builder()
-                    .passengerId(passenger.getPassengerId())
-                    .status(FAIL)
-                    .build());
-        }
-    }
-
-    private void submitPassengerAlert(final String bus, final PassengerVerificationDto passenger) {
-        log.info("--BUS {}-- Submitting to passenger {}", bus, passenger.getPassengerId());
+    public Integer submitPassengerAlert(final PassengerQueryDto passengerQueryDto, PassengerQueryResponseDto passenger) {
+        log.info("--BUS {}-- Submitting to Kiosk", passengerQueryDto.getBus());
+        int verification = passengerNotificationService.getLatestPassengerNum(passengerQueryDto.getBus());
         PassengerQueryResponseDto user =
                 PassengerQueryResponseDto.builder()
-                        .bus(bus)
-                        .verification(passenger.getVerification())
+                        .bus(passengerQueryDto.getBus())
+                        .verification(String.valueOf(verification))
+                        .expireDate(String.valueOf(passenger.getExpireDate()))
                         .passengerId(passenger.getPassengerId()).status(OK).build();
-        messagingTemplate.convertAndSendToUser(passenger.getPassengerId(), TOPIC_VERIFIED_PASSENGER, user);
+        submitMessage(passengerQueryDto.getBus(), TOPIC_VERIFIED_PASSENGER, user);
+        passengerNotificationService.addLatestPassenger(passengerQueryDto.getBus());
+        return verification;
+    }
+
+    @Async
+    private void submitMessage(String bus, String topic, PassengerQueryResponseDto user) {
+        messagingTemplate.convertAndSendToUser(bus, topic, user);
     }
 
     public void submitNewPassenger(final Passenger dto) {

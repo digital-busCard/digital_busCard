@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_transaction_table
+      author: chayakorn.k
+      changes:
+        - createTable:
+            tableName: transaction
+            columns:
+              - column:
+                  name: transaction_seqnum
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: bus
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passenger_seqnum
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_passenger_seqnum_transaction
+                    referencedColumnNames: passenger_seqnum
+                    referencedTableName: passenger
+              - column:
+                  name: timestamp
+                  type: timestamp
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create_passenger_notification_table
+      author: chayakorn.k
+      changes:
+        - createTable:
+            tableName: passenger_notification
+            columns:
+              - column:
+                  name: passenger_notification_seqnum
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: bus
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: last_num
+                  type: int
+                  constraints:
+                    nullable: false
+        - insert:
+            tableName: passenger_notification
+            columns:
+              - column:
+                  name: bus
+                  value: "bus1"
+              - column:
+                  name: last_num
+                  value: 0

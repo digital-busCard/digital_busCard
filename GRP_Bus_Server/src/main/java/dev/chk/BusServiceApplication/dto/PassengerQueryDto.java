@@ -15,6 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PassengerQueryDto {
-    private List<PassengerVerificationDto> passengers;
+    private String passenger;
     private String bus;
 }

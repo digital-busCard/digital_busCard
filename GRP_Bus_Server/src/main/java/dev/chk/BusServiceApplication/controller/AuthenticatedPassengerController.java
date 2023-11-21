@@ -4,7 +4,6 @@ import dev.chk.BusServiceApplication.dto.PassengerQueryDto;
 import dev.chk.BusServiceApplication.dto.PassengerRequestDto;
 import dev.chk.BusServiceApplication.dto.PassengerResponseDto;
 import dev.chk.BusServiceApplication.dto.ResponseDto;
-import dev.chk.BusServiceApplication.service.NotificationService;
 import dev.chk.BusServiceApplication.service.PassengerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +23,12 @@ import static dev.chk.BusServiceApplication.constant.PassengerConstant.TOPIC_VER
 @RequiredArgsConstructor
 public class AuthenticatedPassengerController {
 
-    private final NotificationService notificationService;
-
     private final PassengerService passengerService;
 
     @PostMapping("/passengers")
     public ResponseDto submitNotification(@RequestBody final PassengerQueryDto message) {
         log.info("Received message {}", message);
-        return notificationService.submitPassengerAlerts(message);
+        return passengerService.submitPassengerAlert(message);
     }
 
     @MessageMapping("/passengers")
@@ -39,7 +36,7 @@ public class AuthenticatedPassengerController {
     public ResponseDto submitNotification(final PassengerQueryDto message,
                                           final Principal principal) {
         log.info("From {} Received message {}", principal, message);
-        return notificationService.submitPassengerAlerts(message);
+        return passengerService.submitPassengerAlert(message);
     }
 
     @MessageMapping("/new-passenger")

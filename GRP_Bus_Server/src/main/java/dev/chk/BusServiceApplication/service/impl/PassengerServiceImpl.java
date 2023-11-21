@@ -9,16 +9,17 @@ import dev.chk.BusServiceApplication.service.PassengerService;
 import dev.chk.BusServiceApplication.util.UUIDGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-import static dev.chk.BusServiceApplication.constant.PassengerConstant.FAIL;
-import static dev.chk.BusServiceApplication.constant.PassengerConstant.PASS;
+import static dev.chk.BusServiceApplication.constant.PassengerConstant.*;
 
 @Service
 @RequiredArgsConstructor
@@ -31,25 +32,57 @@ public class PassengerServiceImpl implements PassengerService {
     private final NotificationService notificationService;
 
     @Override
-    public ResponseDto verifyPassengersIdentity(PassengerQueryDto query) {
-        List<String> passengerIdList = query.getPassengers().stream()
-                .map(PassengerVerificationDto::getPassengerId).collect(Collectors.toList());
-        log.info(String.format("Finding query for %s", passengerIdList));
-        List<Passenger> passengers = passengerRepository
-                .findByPassengerIdInAndExpireDateAfter(passengerIdList, LocalDate.now());
-        log.info(String.format("%s is %s", passengerIdList, passengers.size()));
-        List<PassengerQueryResponseDto> passengerQueryResponseDto;
-        if (!passengers.isEmpty()) {
-            passengerQueryResponseDto = passengerMapper.passengerToPassengerQueryResponseDto(passengers);
+    @Cacheable(value = "passenger", key = "#id")
+    public ResponseDto verifyPassengersIdentity(String id) {
+        log.info(String.format("Finding query for %s", id));
+        Optional<Passenger> passenger = passengerRepository
+                .findByPassengerIdAndExpireDateAfter(id, LocalDate.now());
+        PassengerQueryResponseDto passengerQueryResponseDto;
+        if (passenger.isPresent()) {
+            log.info(String.format("Found passenger for %s", id));
+            passengerQueryResponseDto = passengerMapper.passengerToPassengerQueryResponseDto(passenger.get());
         } else {
-            passengerQueryResponseDto = Collections.singletonList(
-                    PassengerQueryResponseDto.builder().status(FAIL).build());
+            log.info(String.format("No passenger for %s", id));
+            passengerQueryResponseDto =
+                    PassengerQueryResponseDto.builder().status(FAIL).build();
         }
-
-        return ResponseDto.builder().passengers(passengerQueryResponseDto)
+        return ResponseDto.builder().passenger(passengerQueryResponseDto)
                 .status("OK").timeStamp(LocalDateTime.now()).build();
     }
 
+    public ResponseDto submitPassengerAlert(final PassengerQueryDto dto) {
+        PassengerQueryResponseDto passengerQueryResponseDto = processPassenger(dto);
+        return ResponseDto.builder().passenger(passengerQueryResponseDto).status(OK).timeStamp(LocalDateTime.now()).build();
+    }
+
+    private PassengerQueryResponseDto processPassenger(PassengerQueryDto dto) {
+        ResponseDto responseDto = verifyPassengersIdentity(dto.getPassenger());
+        if (!FAIL.equals(responseDto.getPassenger().getStatus())) {
+            try {
+                Integer verification = notificationService.submitPassengerAlert(dto, responseDto.getPassenger());
+                return PassengerQueryResponseDto.builder().passengerId(dto.getPassenger())
+                        .expireDate(responseDto.getPassenger().getExpireDate())
+                        .verification(String.valueOf(verification))
+                        .bus(dto.getBus())
+                        .status(PASS)
+                        .build();
+            } catch (Exception ex) {
+                log.error("--BUS {}-- Submitting to Kiosk error due to {}", dto.getBus(), ex.getMessage());
+                return PassengerQueryResponseDto.builder()
+                        .passengerId(dto.getPassenger())
+                        .bus(dto.getBus())
+                        .status(FAIL)
+                        .build();
+            }
+        }
+        log.error("--BUS {}-- Verification failed for {}", dto.getBus(), dto.getPassenger());
+        return PassengerQueryResponseDto.builder()
+                .passengerId(dto.getPassenger())
+                .status(FAIL)
+                .build();
+    }
+
+    @Override
     public PassengerResponseDto createNewPassenger(PassengerRequestDto passengerRequestDto) {
         log.info(String.format("Creating new passenger " +
                 "with passenger type %s", passengerRequestDto.getPassengerTypeCode()));
