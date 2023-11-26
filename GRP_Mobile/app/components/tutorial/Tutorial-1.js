@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import {View, Text, Button} from 'react-native-ui-lib';
 import LottieView from "lottie-react-native";
-import bluetooth from "../../../assets/bluetooth.json"
+import React, { useEffect, useState } from 'react';
+import { NativeEventEmitter, NativeModules, TouchableOpacity } from 'react-native';
+import { Button, Icon, Text, View } from 'react-native-ui-lib';
+import bluetooth from "../../../assets/bluetooth.json";
 import { Colors } from '../../constant/Colors';
 import { TutorialStyles } from '../../constant/CommonStyle';
-import { Icon } from 'react-native-ui-lib';
-import { TouchableOpacity, Alert } from 'react-native';
 import { checkPermission } from '../../external/bluetooth';
-import { NativeEventEmitter, NativeModules } from 'react-native';
 
 
 const Tutorial1 = ({navigation}) => {
@@ -30,7 +28,7 @@ const Tutorial1 = ({navigation}) => {
     <View style={TutorialStyles.container}>
        <View style={TutorialStyles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <View style={TutorialStyles.backContainer}><Icon source={require('../../../assets/back.webp')} size={40} tintColor={Colors.primary}/></View>
+          <View style={TutorialStyles.backContainer}><Icon source={require('../../../assets/back.webp')} size={40} tintColor={Colors.white}/></View>
         </TouchableOpacity>
         <View style={TutorialStyles.titleContainer}><Text style={TutorialStyles.title}>Let's get Started!</Text></View>
       </View>

@@ -17,18 +17,17 @@ import Tutorial3 from './app/components/tutorial/Tutorial-3';
 import Tutorial4 from './app/components/tutorial/Tutorial-4';
 import Purchase1 from './app/components/purchase/Purchase1';
 import {NativeEventEmitter, NativeModules} from 'react-native'
-import { Alert } from 'react-native';
-
-const eventEmitter = new NativeEventEmitter(NativeModules.BLEAdvertiser);
-onBTStatusChange = eventEmitter.addListener('onBTStatusChange', (enabled) => {
-  if (!enabled.enabled) {
-    Alert.alert("Please turn on Bluetooth")
-  }
-});
+import Recommend from './app/components/purchase/Recommend';
+import SelectCard from './app/components/purchase/SelectCard';
+import CardDetail from './app/components/purchase/CardDetail';
 
 const Stack = createNativeStackNavigator();
 
 const App: () => React$Node = () => {
+  const eventEmitter = new NativeEventEmitter(NativeModules.BLEAdvertiser);
+onBTStatusChange = eventEmitter.addListener('onBTStatusChange', (enabled) => {
+  return
+});
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -38,6 +37,9 @@ const App: () => React$Node = () => {
         <Stack.Screen name="Tutorial3" component={Tutorial3} options={{headerShown: false}}/>
         <Stack.Screen name="Tutorial4" component={Tutorial4} options={{headerShown: false}}/>
         <Stack.Screen name="Purchase1" component={Purchase1} options={{headerShown: false}}/>
+        <Stack.Screen name="Recommend" component={Recommend} options={{headerShown: false}}/>
+        <Stack.Screen name="SelectCard" component={SelectCard} options={{headerShown: false}}/>
+        <Stack.Screen name="CardDetail" component={CardDetail} options={{headerShown: false}}/>
       </Stack.Navigator>
       </NavigationContainer>
   );

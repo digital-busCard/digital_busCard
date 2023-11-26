@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import {View, Text, Image, Button} from 'react-native-ui-lib';
 import LottieView from "lottie-react-native";
-import bluetooth from "../../../assets/bluetooth.json"
+import React, { useEffect, useState } from 'react';
+import { TouchableOpacity } from 'react-native';
+import Collapsible from 'react-native-collapsible';
+import { Button, Icon, Image, Text, View } from 'react-native-ui-lib';
+import bus from "../../../assets/bus.json";
+import reginaLogo from "../../../assets/regina_logo.png";
 import { Colors } from '../../constant/Colors';
 import { TutorialStyles } from '../../constant/CommonStyle';
-import bus from "../../../assets/bus.json"
-import reginaLogo from "../../../assets/regina_logo.png"
-import { Icon } from 'react-native-ui-lib';
-import { TouchableOpacity, Alert } from 'react-native';
-import { checkPermission } from '../../external/bluetooth';
-import { NativeEventEmitter, NativeModules } from 'react-native';
-import Collapsible from 'react-native-collapsible';
 
 
 const Purchase1 = ({navigation}) => {
@@ -27,7 +23,7 @@ const Purchase1 = ({navigation}) => {
     <View style={TutorialStyles.container}>
       <View style={TutorialStyles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <View style={TutorialStyles.backContainer}><Icon source={require('../../../assets/back.webp')} size={40} tintColor={Colors.primary}/></View>
+          <View style={TutorialStyles.backContainer}><Icon source={require('../../../assets/back.webp')} size={40} tintColor={Colors.white}/></View>
         </TouchableOpacity>
         <View style={TutorialStyles.titleContainer}><Text style={TutorialStyles.title}>Are you ready?</Text></View>
       </View>
@@ -45,8 +41,8 @@ const Purchase1 = ({navigation}) => {
       <View style={TutorialStyles.footer}>
         <Button onPress={() => setIsCollapsed(!isCollapsed)} label="I want to buy a card" style={topicButton} backgroundColor={Colors.primary}/>
         <Collapsible style={TutorialStyles.collapsed} collapsed={isCollapsed}>
-            <View style={TutorialStyles.listButton}><Text>I would like some help to choose a card</Text></View>
-            <View style={TutorialStyles.listButton}><Text>I want to pick a card myself</Text></View>
+            <TouchableOpacity onPress={() => navigation.navigate('Recommend')} style={TutorialStyles.listButton}><View><Text style={{textAlign: 'center'}}>I would like some help to choose a card</Text></View></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('SelectCard')} style={TutorialStyles.listButton}><View><Text style={{textAlign: 'center'}}>I want to pick a card myself</Text></View></TouchableOpacity>
         </Collapsible>
         <View style={TutorialStyles.inferiorContainer}><Text style={TutorialStyles.inferiorText}>Maybe later</Text></View>
       </View>

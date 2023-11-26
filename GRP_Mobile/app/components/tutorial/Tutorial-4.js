@@ -1,18 +1,17 @@
-import React from 'react'
-import {View, Text, Button, Image} from 'react-native-ui-lib';
-import bus from "../../../assets/bus.json"
+import LottieView from 'lottie-react-native';
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
+import { Button, Icon, Text, View } from 'react-native-ui-lib';
+import bus from "../../../assets/bus.json";
 import { Colors } from '../../constant/Colors';
 import { TutorialStyles } from '../../constant/CommonStyle';
-import LottieView from 'lottie-react-native';
-import { Icon } from 'react-native-ui-lib';
-import { TouchableOpacity } from 'react-native';
 
 const Tutorial4 = ({navigation}) => {
   return (
     <View style={TutorialStyles.container}>
        <View style={TutorialStyles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <View style={TutorialStyles.backContainer}><Icon source={require('../../../assets/back.webp')} size={40} tintColor={Colors.primary}/></View>
+          <View style={TutorialStyles.backContainer}><Icon source={require('../../../assets/back.webp')} size={40} tintColor={Colors.white}/></View>
         </TouchableOpacity>
         <View style={TutorialStyles.titleContainer}><Text style={TutorialStyles.title}>Almost Done!</Text></View>
       </View>

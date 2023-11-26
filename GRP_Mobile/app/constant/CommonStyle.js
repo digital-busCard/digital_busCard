@@ -10,10 +10,13 @@ export const CommonStyles = StyleSheet.create({
         marginTop: '5%'
     },
     header: {
+      backgroundColor: Colors.primary,
       width: '100%',
       alignItems: "left",
-      marginVertical: '10%',
-      padding: 30
+      padding: 40,
+      paddingTop: 60,
+      borderBottomLeftRadius: 30,
+      borderBottomRightRadius: 30
     },
     main: {
       flex: 1,
@@ -21,6 +24,7 @@ export const CommonStyles = StyleSheet.create({
       marginHorizontal: "auto",
     },
     primaryMedia: {
+      marginTop: 20,
       height: 50
     },
     primaryButton: {
@@ -32,11 +36,13 @@ export const CommonStyles = StyleSheet.create({
       fontWeight:'bold'
     },
     title: {
+      color: Colors.white,
       fontSize: 40,
       fontWeight: "bold",
     },
     suggestion: {
-        fontSize: 20
+        fontSize: 20,
+        color: Colors.white,
     },
     subtitle: {
       fontSize: 36,
@@ -58,34 +64,48 @@ export const CommonStyles = StyleSheet.create({
     },
     suggestionContainer: {
         marginTop: '5%',
-        width: '100%',
+        width: '90%',
         alignItems: "center",
         marginBottom: '20%',
-        flex: 1
+        flex: 2,
+        borderWidth: 2,
+        borderColor: Colors.primary,
+        borderRadius: 20, 
+        justifyContent: 'center',
+        backgroundColor: Colors.primary,
+        color: Colors.white
     },
     purchaseContainer: {
-        height: 30,
-        alignItems: "left",
-        marginBottom: '20%',
         flex: 5,
+        flexShrink: 1,
+        flexDirection: "row",
+        flexWrap: "wrap",
     },
     header: {
+      backgroundColor: Colors.primary,
       flexDirection: 'row',
       width: '100%',
       alignItems: "left",
-      marginTop: '15%',
       padding: 20,
-      flex: 1
+      paddingTop: 60,
+      flex: 1,
+      borderBottomRightRadius: 30,
+      borderBottomLeftRadius: 30,
+      marginBottom: 20,
     },
     grid: {
         flexDirection: 'row',
-        width: '100%',
+        width: '90%',
         alignItems: "left",
-        flex: 1
+        flex: 1,
       },
     titleContainer: {
         flex: 5,
-        paddingLeft: '5%'
+        flexShrink: 1,
+        paddingLeft: '5%',
+        flexDirection: "row",
+        flexWrap: "wrap",
+        color: Colors.white
     },
     backContainer: {
         flex: 1,
@@ -103,6 +123,14 @@ export const CommonStyles = StyleSheet.create({
     primaryMedia: {
       height: 50
     },
+    answer: {
+        width: '80%',
+        padding: 30,
+        flex: 3,
+        borderRadius: 20,
+        borderWidth: 3,
+        borderColor: Colors.primary
+    },
     primaryButton: {
       width:'100%', 
       height: 50
@@ -119,10 +147,10 @@ export const CommonStyles = StyleSheet.create({
         borderBottomRightRadius: 0
     },
     listButton: {
-        height: 40,
+        height: 50,
+        width: '100%',
         flex: 1,
-        textAlign: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     inferiorContainer: {
         paddingTop: 20,
@@ -136,14 +164,25 @@ export const CommonStyles = StyleSheet.create({
     },
     title: {
       fontSize: 30,
+      flexShrink: 1,
       fontWeight: "bold",
+      color: Colors.white
+    },
+    question: {
+        color: 'black',
+        padding: 25
     },
     page: {
+        color: Colors.white,
         textAlign: 'center',
+        fontWeight: 'bold'
     },
     suggestion: {
-        fontSize: 15,
-        padding: 2
+        width: '100%',
+        fontSize: 16,
+        flexShrink: 1,
+        textAlign: 'center',
+        color: 'white'
     },
     subtitle: {
       fontSize: 36,
@@ -158,6 +197,23 @@ export const CommonStyles = StyleSheet.create({
     maxWidth: {
         width: '100%',
         flex: 1,
+    },
+    list: {
+        borderRadius: 20,
+        backgroundColor: Colors.primary,
+        width: '90%',
+        flex: 8,
+        overflow: 'hidden'
+    },
+    legendContainer: {
+        paddingLeft: 20,
+        width: '90%',
+        flex: 1,
+        backgroundColor: Colors.primary,
+        borderRadius: 20,
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: 20,
     },
     footer: {
       flex: 2,
@@ -179,6 +235,5 @@ export const CommonStyles = StyleSheet.create({
     },
     inferiorText: {
         textAlign: 'center',
-        textDecorationLine: 'underline'
     },
   });

@@ -1,17 +1,16 @@
-import React from 'react'
-import {View, Text, Button, Image} from 'react-native-ui-lib';
-import bluetoothInfo from "../../../assets/bluetooth-info.png"
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
+import { Button, Icon, Image, Text, View } from 'react-native-ui-lib';
+import bluetoothInfo from "../../../assets/bluetooth-info.png";
 import { Colors } from '../../constant/Colors';
 import { TutorialStyles } from '../../constant/CommonStyle';
-import { Icon } from 'react-native-ui-lib';
-import { TouchableOpacity } from 'react-native';
 
 const Tutorial3 = ({navigation}) => {
   return (
     <View style={TutorialStyles.container}>
        <View style={TutorialStyles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <View style={TutorialStyles.backContainer}><Icon source={require('../../../assets/back.webp')} size={40} tintColor={Colors.primary}/></View>
+          <View style={TutorialStyles.backContainer}><Icon source={require('../../../assets/back.webp')} size={40} tintColor={Colors.white}/></View>
         </TouchableOpacity>
         <View style={TutorialStyles.titleContainer}><Text style={TutorialStyles.title}>Let's get Started!</Text></View>
       </View>

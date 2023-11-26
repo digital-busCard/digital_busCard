@@ -1,6 +1,5 @@
 
 import BLEAdvertiser from 'react-native-ble-advertiser';
-import { Alert } from 'react-native';
 
 export async function checkPermission() {
     try {
