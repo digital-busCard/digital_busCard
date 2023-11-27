@@ -20,6 +20,7 @@ import {NativeEventEmitter, NativeModules} from 'react-native'
 import Recommend from './app/components/purchase/Recommend';
 import SelectCard from './app/components/purchase/SelectCard';
 import CardDetail from './app/components/purchase/CardDetail';
+import { checkOnboard } from './app/external/config';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,8 +29,11 @@ const App: () => React$Node = () => {
 onBTStatusChange = eventEmitter.addListener('onBTStatusChange', (enabled) => {
   return
 });
+
+const isOnboarded = checkOnboard();
   return (
     <NavigationContainer>
+      {!isOnboarded ? 
       <Stack.Navigator>
         <Stack.Screen name="Onboarding" component={Onboarding} options={{headerShown: false}} />
         <Stack.Screen name="Tutorial1" component={Tutorial1} options={{headerShown: false}}/>
@@ -40,7 +44,21 @@ onBTStatusChange = eventEmitter.addListener('onBTStatusChange', (enabled) => {
         <Stack.Screen name="Recommend" component={Recommend} options={{headerShown: false}}/>
         <Stack.Screen name="SelectCard" component={SelectCard} options={{headerShown: false}}/>
         <Stack.Screen name="CardDetail" component={CardDetail} options={{headerShown: false}}/>
+      </Stack.Navigator> : 
+      <Stack.Navigator>
+        <Stack.Screen name="Purchase1" component={Purchase1} options={{headerShown: false}}/>
+         <Stack.Screen name="Onboarding" component={Onboarding} options={{headerShown: false}} />
+         <Stack.Screen name="Tutorial1" component={Tutorial1} options={{headerShown: false}}/>
+          <Stack.Screen name="Tutorial2" component={Tutorial2} options={{headerShown: false}}/>
+          <Stack.Screen name="Tutorial3" component={Tutorial3} options={{headerShown: false}}/>
+          <Stack.Screen name="Tutorial4" component={Tutorial4} options={{headerShown: false}}/>
+          <Stack.Screen name="Recommend" component={Recommend} options={{headerShown: false}}/>
+          <Stack.Screen name="SelectCard" component={SelectCard} options={{headerShown: false}}/>
+          <Stack.Screen name="CardDetail" component={CardDetail} options={{headerShown: false}}/>
       </Stack.Navigator>
+      
+      }
+
       </NavigationContainer>
   );
 };

@@ -5,8 +5,15 @@ import { Button, Icon, Text, View } from 'react-native-ui-lib';
 import bus from "../../../assets/bus.json";
 import { Colors } from '../../constant/Colors';
 import { TutorialStyles } from '../../constant/CommonStyle';
+import { saveOnBoardConfig } from '../../external/config';
 
 const Tutorial4 = ({navigation}) => {
+
+  function completeOnboard() {
+    saveOnBoardConfig();
+    navigation.navigate('Purchase1')
+  }
+
   return (
     <View style={TutorialStyles.container}>
        <View style={TutorialStyles.header}>

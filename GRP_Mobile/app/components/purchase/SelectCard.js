@@ -20,10 +20,17 @@ const SelectCard = ({route, navigation}) => {
   const [card, setCard] = useState()
   const [filteredCard, setFilteredCard] = useState(card);
   const [isLoaded, setIsLoaded] = useState(false);
+  const { acceptedCriteria } = route.params;
 
   useEffect(() => {
     async function call() {
-      cardList = await getRecommendedCard();
+      cardList = await getRecommendedCard(acceptedCriteria);
+      console.log(JSON.stringify(cardList))
+      if (acceptedCriteria[0] != undefined) {
+        cardList = cardList.filter((card) => {
+          return card.isRecommended === "true" || card.cardTypeDescription[0].code === "99"
+        })
+      }
       setCard(cardList);
       setFilteredCard(cardList);
       setIsLoaded(true);
@@ -35,10 +42,9 @@ const SelectCard = ({route, navigation}) => {
     <AnimatedSplash
         logoWidth={150}
         logoHeight={150}
-        translucent={true}
+        backgroundColor={Colors.line}
         isLoaded={isLoaded}
         logoImage={reginaSmallLogo}
-        disableBackgroundImage
       >
     <View style={TutorialStyles.container}>
       <View style={TutorialStyles.header}>
@@ -130,7 +136,7 @@ const SelectCard = ({route, navigation}) => {
                     alignItems: 'center',
                     flexDirection: 'row',
                   }}>
-                  {item.item.isRecommended ? (
+                  {item.item.isRecommended === "true" ? (
                     <View
                       style={{
                         position: 'absolute',

@@ -16,7 +16,14 @@ export const CommonStyles = StyleSheet.create({
       padding: 40,
       paddingTop: 60,
       borderBottomLeftRadius: 30,
-      borderBottomRightRadius: 30
+      borderBottomRightRadius: 30,
+      shadowColor: Colors.primary,
+      shadowOffset: {
+      width: 5,
+	  height: 14,
+},
+     shadowOpacity: 0.43,
+     shadowRadius: 9.51,
     },
     main: {
       flex: 1,
@@ -29,7 +36,14 @@ export const CommonStyles = StyleSheet.create({
     },
     primaryButton: {
       width:'100%', 
-      height: 50
+      height: 50,
+      shadowColor: Colors.primary,
+      shadowOffset: {
+      width: 5,
+	  height: 14,
+},
+     shadowOpacity: 0.43,
+     shadowRadius: 9.51,
     },
     primaryLabel: {
       fontSize: 20, 
@@ -73,7 +87,14 @@ export const CommonStyles = StyleSheet.create({
         borderRadius: 20, 
         justifyContent: 'center',
         backgroundColor: Colors.primary,
-        color: Colors.white
+        color: Colors.white,
+        shadowColor: Colors.primary,
+        shadowOffset: {
+        width: 5,
+        height: 14,
+  },
+       shadowOpacity: 0.43,
+       shadowRadius: 9.51,
     },
     purchaseContainer: {
         flex: 5,
@@ -92,6 +113,13 @@ export const CommonStyles = StyleSheet.create({
       borderBottomRightRadius: 30,
       borderBottomLeftRadius: 30,
       marginBottom: 20,
+      shadowColor: Colors.primary,
+      shadowOffset: {
+      width: 5,
+	  height: 14,
+},
+     shadowOpacity: 0.43,
+     shadowRadius: 9.51,
     },
     grid: {
         flexDirection: 'row',
@@ -129,22 +157,43 @@ export const CommonStyles = StyleSheet.create({
         flex: 3,
         borderRadius: 20,
         borderWidth: 3,
-        borderColor: Colors.primary
+        borderColor: Colors.primary,
+        shadowColor: Colors.line,
+        shadowOffset: {
+        width: 5,
+        height: 5,
+  },
+       shadowOpacity: 10.43,
+       shadowRadius: 3.51,
     },
     primaryButton: {
       width:'100%', 
-      height: 50
+      height: 50,
+      shadowColor: Colors.primary,
+      shadowOffset: {
+      width: 5,
+	  height: 14,
+},
+     shadowOpacity: 0.43,
+     shadowRadius: 9.51,
     },
     headButton: {
         width:'100%', 
         height: 50,
-        borderRadius: 20
+        borderRadius: 20,
+        shadowColor: Colors.primary,
+        shadowOffset: {
+        width: 5,
+        height: 14,
+  },
+       shadowOpacity: 0.43,
+       shadowRadius: 9.51,
     },
     expandedButton: {
         width:'100%', 
         height: 50,
         borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0
+        borderBottomRightRadius: 0,
     },
     listButton: {
         height: 50,
@@ -170,7 +219,16 @@ export const CommonStyles = StyleSheet.create({
     },
     question: {
         color: 'black',
-        padding: 25
+        paddingTop: 25,
+        paddingLeft: 10,
+        fontWeight: 'bold',
+        fontSize: 14
+    },
+    subQuestion: {
+        color: 'black',
+        paddingLeft: 10,
+        fontWeight: 'bold',
+        fontSize: 14
     },
     page: {
         color: Colors.white,
@@ -203,7 +261,14 @@ export const CommonStyles = StyleSheet.create({
         backgroundColor: Colors.primary,
         width: '90%',
         flex: 8,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        shadowColor: Colors.green,
+        shadowOffset: {
+        width: 5,
+        height: 14,
+  },
+       shadowOpacity: 0.43,
+       shadowRadius: 9.51,
     },
     legendContainer: {
         paddingLeft: 20,
@@ -214,6 +279,13 @@ export const CommonStyles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         marginBottom: 20,
+        shadowColor: Colors.primary,
+        shadowOffset: {
+        width: 5,
+        height: 14,
+  },
+       shadowOpacity: 0.43,
+       shadowRadius: 9.51,
     },
     footer: {
       flex: 2,

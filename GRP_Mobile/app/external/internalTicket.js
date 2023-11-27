@@ -11,7 +11,8 @@ export const getTicket = async () => {
 
 export const addTicket = async (ticketId) => {
     try {
-        await AsyncStorage.setItem('ticket', ticketId);
+        console.log("addding " + ticketId)
+        await AsyncStorage.setItem("ticket", ticketId);
       } catch (e) {
         console.log("Error of Async data store because: " + e)
       }

@@ -13,7 +13,7 @@ export const addKiosk = async (kioskId) => {
     try {
         let kiosk = await AsyncStorage.getItem('kiosk');
         if (kiosk) {
-            if (kiosk.findIndex((item) => item ===kioskId) < 0) {
+            if (kiosk.findIndex((item) => item === kioskId) < 0) {
                 kiosk.push(kisokId)
             } 
         } else {
