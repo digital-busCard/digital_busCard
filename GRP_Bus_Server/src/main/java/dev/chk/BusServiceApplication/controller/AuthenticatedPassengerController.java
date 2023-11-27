@@ -47,7 +47,7 @@ public class AuthenticatedPassengerController {
     }
 
     @PostMapping("/new-passenger")
-    public PassengerResponseDto createPassenger(final PassengerRequestDto message) {
+    public PassengerResponseDto createPassenger(@RequestBody final PassengerRequestDto message) {
         log.info("Received message {}", message);
         return passengerService.createNewPassenger(message);
     }

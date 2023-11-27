@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="adb75e24-c92a-44f5-865f-9c1e4f928ab0" name="Changes" comment="finish with kiosk">
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/dto/CardTypeDescription.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/dto/PassengerRecommendDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/dto/PassengerRecommendResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/dto/PassengerTypeResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/mapper/PassengerTypeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/model/PassengerType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/model/PassengerTypeCriteria.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/repository/PassengerTypeCriteriaRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/repository/PassengerTypeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/service/PassengerTypeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/service/impl/PassengerTypeServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/resources/db/changelog/liquibase-tran/1.0.0_03_create_passenger_type.yaml" afterDir="false" />
+    <list default="true" id="adb75e24-c92a-44f5-865f-9c1e4f928ab0" name="Changes" comment="add get recommendation feature">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/7.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/7.4.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/7.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/7.4.1/executionHistory/executionHistory.lock" afterDir="false" />
@@ -24,15 +12,11 @@
       <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/7.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/7.4.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/7.4.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/7.4.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/build/classes/java/main/dev/chk/BusServiceApplication/service/impl/PassengerServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/build/classes/java/main/dev/chk/BusServiceApplication/service/impl/PassengerServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/build/generated/sources/annotationProcessor/java/main/dev/chk/BusServiceApplication/mapper/PassengerMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/build/generated/sources/annotationProcessor/java/main/dev/chk/BusServiceApplication/mapper/PassengerMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/build/libs/grp-bus-server-0.0.1-SNAPSHOT-plain.jar" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/build/libs/grp-bus-server-0.0.1-SNAPSHOT-plain.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/build/libs/grp-bus-server-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/build/libs/grp-bus-server-0.0.1-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/controller/AuthenticatedPassengerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/controller/AuthenticatedPassengerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/dto/PassengerRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/dto/PassengerRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/service/impl/PassengerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/service/impl/PassengerServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1700793814941</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add get recommendation feature">
+      <created>1701043743266</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1701043743266</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -238,6 +229,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="switch logic" />
     <MESSAGE value="finish with kiosk" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish with kiosk" />
+    <MESSAGE value="add get recommendation feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="add get recommendation feature" />
   </component>
 </project>
