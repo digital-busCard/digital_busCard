@@ -1,10 +1,8 @@
 package dev.chk.BusServiceApplication.controller;
 
-import dev.chk.BusServiceApplication.dto.PassengerQueryDto;
-import dev.chk.BusServiceApplication.dto.PassengerRequestDto;
-import dev.chk.BusServiceApplication.dto.PassengerResponseDto;
-import dev.chk.BusServiceApplication.dto.ResponseDto;
+import dev.chk.BusServiceApplication.dto.*;
 import dev.chk.BusServiceApplication.service.PassengerService;
+import dev.chk.BusServiceApplication.service.PassengerTypeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -13,6 +11,7 @@ import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 import static dev.chk.BusServiceApplication.constant.PassengerConstant.TOPIC_NEW_PASSENGER;
 import static dev.chk.BusServiceApplication.constant.PassengerConstant.TOPIC_VERIFIED_PASSENGER;
@@ -24,6 +23,7 @@ import static dev.chk.BusServiceApplication.constant.PassengerConstant.TOPIC_VER
 public class AuthenticatedPassengerController {
 
     private final PassengerService passengerService;
+    private final PassengerTypeService passengerTypeService;
 
     @PostMapping("/passengers")
     public ResponseDto submitNotification(@RequestBody final PassengerQueryDto message) {
@@ -44,5 +44,22 @@ public class AuthenticatedPassengerController {
     public PassengerResponseDto submitNewPassengerInfo(final PassengerRequestDto message) {
         log.info("Received message {}", message);
         return passengerService.createNewPassenger(message);
+    }
+
+    @PostMapping("/new-passenger")
+    public PassengerResponseDto createPassenger(final PassengerRequestDto message) {
+        log.info("Received message {}", message);
+        return passengerService.createNewPassenger(message);
+    }
+
+    @PostMapping("/recommend")
+    public List<PassengerRecommendResponseDto> getRecommendCard(@RequestBody final PassengerRecommendDto message) {
+        log.info("Received message {}", message);
+        return passengerTypeService.getRecommendedPassenger(message.getCode());
+    }
+
+    @GetMapping("/cards")
+    public List<PassengerTypeResponseDto> getRecommendCard() {
+        return passengerTypeService.getPassengerTypeCriteria();
     }
 }

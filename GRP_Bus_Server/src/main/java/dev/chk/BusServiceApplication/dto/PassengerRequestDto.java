@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PassengerRequestDto {
     private String passengerTypeCode;
+    private String validFrom;
 }
