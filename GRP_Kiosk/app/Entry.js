@@ -116,6 +116,9 @@ onConnected = () => {
 }
 
   addPassengerLogged(passengerInformation) {
+    if (!passengerInformation.passengerId) {
+      return
+    }
     const queuedPassenger = this.state.passengerLogged.find((passenger) => passenger.verification == passengerInformation.verification)
     console.log(queuedPassenger)
     if (!queuedPassenger) {
@@ -125,7 +128,6 @@ onConnected = () => {
         verification: passengerInformation.verification,
         expireDate: passengerInformation.expireDate
       };
-
       this.setState({
         passengerLogged: update(this.state.passengerLogged, {
           $push: [
@@ -172,10 +174,15 @@ onConnected = () => {
   }
 
   short(str) {
-    return (
-      ' xxx' +
-      str.substring(str.length - 4, str.length)
-    ).toUpperCase();
+    try {
+      return (
+        ' xxx' +
+        
+        str.substring(str.length - 4, str.length)
+      ).toUpperCase();
+    } catch {
+      return str;
+    }
   }
 
   render() {

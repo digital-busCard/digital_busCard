@@ -38,7 +38,8 @@
     "react-navigation-stack": "^2.10.4",
     "realm": "^12.3.0",
     "sockjs": "^0.3.24",
-    "sockjs-client": "^1.6.1"
+    "sockjs-client": "^1.6.1",
+    "text-encoding": "^0.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

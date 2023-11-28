@@ -66,7 +66,7 @@ const CardDetail = ({route, navigation}) => {
       setIsLoaded(false);
       ticketId = await purchase(item.cardTypeId, validFrom.getDate() + "/" + validFrom.getMonth() + "/" + validFrom.getFullYear());
       if (ticketId) {
-        await addTicket(ticketId.passengerId);
+        await addTicket(ticketId.passengerId, ticketId.expireDate);
         setIsLoaded(true);
         Alert.alert("Nicely Done!", 'You have purchased a fare card type ' + item.cardName + ' for $CAD' + item.price);
       } else {

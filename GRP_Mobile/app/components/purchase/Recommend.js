@@ -66,7 +66,7 @@ const Recommend = ({navigation}) => {
         </View>
       </View>
       <View style={TutorialStyles.footer}>
-      <Button style={TutorialStyles.primaryButton} label="Next" labelStyle={TutorialStyles.primaryLabel} backgroundColor={Colors.primary} onPress={() => navigation.navigate('SelectCard', {
+      <Button style={TutorialStyles.primaryButton} label={appliedStatusList[0] ? "Next" : "Skip"} labelStyle={TutorialStyles.primaryLabel} backgroundColor={Colors.primary} onPress={() => navigation.navigate('SelectCard', {
               acceptedCriteria: appliedStatusList[0] ? appliedStatusList : ["99"]
              })}/>
       </View>

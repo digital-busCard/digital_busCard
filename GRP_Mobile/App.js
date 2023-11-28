@@ -21,6 +21,8 @@ import Recommend from './app/components/purchase/Recommend';
 import SelectCard from './app/components/purchase/SelectCard';
 import CardDetail from './app/components/purchase/CardDetail';
 import { checkOnboard } from './app/external/config';
+import Home from './app/work-main/Home';
+import * as encoding from 'fast-text-encoding'
 
 const Stack = createNativeStackNavigator();
 
@@ -33,8 +35,10 @@ onBTStatusChange = eventEmitter.addListener('onBTStatusChange', (enabled) => {
 const isOnboarded = checkOnboard();
   return (
     <NavigationContainer>
+      <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
       {!isOnboarded ? 
       <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
         <Stack.Screen name="Onboarding" component={Onboarding} options={{headerShown: false}} />
         <Stack.Screen name="Tutorial1" component={Tutorial1} options={{headerShown: false}}/>
         <Stack.Screen name="Tutorial2" component={Tutorial2} options={{headerShown: false}}/>
@@ -46,6 +50,7 @@ const isOnboarded = checkOnboard();
         <Stack.Screen name="CardDetail" component={CardDetail} options={{headerShown: false}}/>
       </Stack.Navigator> : 
       <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
         <Stack.Screen name="Purchase1" component={Purchase1} options={{headerShown: false}}/>
          <Stack.Screen name="Onboarding" component={Onboarding} options={{headerShown: false}} />
          <Stack.Screen name="Tutorial1" component={Tutorial1} options={{headerShown: false}}/>

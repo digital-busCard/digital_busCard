@@ -6367,12 +6367,10 @@ react-is@^18.1.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-native-ble-advertiser@^0.0.17, "react-native-ble-advertiser@file:../react-native-ble-advertiser-0.0.16.tgz":
+react-native-ble-advertiser@^0.0.17:
   version "0.0.17"
-  resolved "file:../react-native-ble-advertiser-0.0.16.tgz"
-  integrity sha512-aAo+x0dpHKs+1VPnxC7V86c/WVu3P8MhzAggphq0i4XlooZNPHR3KZw/xcKWbYIXmbArn+AYkJsAWjgmP6WhpQ==
-  dependencies:
-    react-native-ble-advertiser "^0.0.17"
+  resolved "https://registry.npmjs.org/react-native-ble-advertiser/-/react-native-ble-advertiser-0.0.17.tgz"
+  integrity sha512-26kWCC/xyo/dtXQSD52vFqPXzD0xKWuyBIZR7pmXLlqDzVQR+N80sqKVweCt7OmPhkRloQ0z5D0Q7Jnbw6pvmA==
 
 react-native-uuid-generator@^6.1.1:
   version "6.1.1"
