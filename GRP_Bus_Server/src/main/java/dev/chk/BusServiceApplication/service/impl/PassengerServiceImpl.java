@@ -3,9 +3,11 @@ package dev.chk.BusServiceApplication.service.impl;
 import dev.chk.BusServiceApplication.dto.*;
 import dev.chk.BusServiceApplication.mapper.PassengerMapper;
 import dev.chk.BusServiceApplication.model.Passenger;
+import dev.chk.BusServiceApplication.model.PassengerType;
 import dev.chk.BusServiceApplication.repository.PassengerRepository;
 import dev.chk.BusServiceApplication.service.NotificationService;
 import dev.chk.BusServiceApplication.service.PassengerService;
+import dev.chk.BusServiceApplication.service.PassengerTypeService;
 import dev.chk.BusServiceApplication.util.UUIDGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +29,9 @@ import static dev.chk.BusServiceApplication.constant.PassengerConstant.*;
 public class PassengerServiceImpl implements PassengerService {
 
     private final PassengerRepository passengerRepository;
-    private final PassengerMapper passengerMapper;
 
+    private final PassengerTypeService passengerTypeService;
+    private final PassengerMapper passengerMapper;
     private final NotificationService notificationService;
 
     @Override
@@ -89,7 +92,7 @@ public class PassengerServiceImpl implements PassengerService {
         Passenger passenger = Passenger
                 .builder()
                 .passengerId(UUIDGenerator.getNewUUID())
-                .expireDate(getExpireDate(passengerRequestDto.getPassengerTypeCode()))
+                .expireDate(getExpireDate(passengerRequestDto.getValidFrom(), passengerRequestDto.getPassengerTypeCode()))
                 .build();
         log.info(String.format("Saving new passenger %s " +
                 "with passenger type %s", passenger.getPassengerId(),
@@ -107,8 +110,13 @@ public class PassengerServiceImpl implements PassengerService {
         return passengerResponseDto;
     }
 
-    private LocalDate getExpireDate(String passengerTypeCode) {
-        return LocalDate.now().plusMonths(1);
+    private LocalDate getExpireDate(String validFrom, String passengerTypeCode) {
+        PassengerType passengerType = passengerTypeService
+                .getPassengerType(Long.parseLong(passengerTypeCode));
+        LocalDate transformedDate = LocalDate
+                .of(Integer.parseInt(validFrom.split("/")[2]),
+                        Integer.parseInt(validFrom.split("/")[1]),
+                        Integer.parseInt(validFrom.split("/")[0]));
+        return transformedDate.plusDays(passengerType.getPassengerTypeValidFor());
     }
-
 }

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="adb75e24-c92a-44f5-865f-9c1e4f928ab0" name="Changes" comment="fix purchase a card request payload">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRP_Kiosk/ios/BusKiosk.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Kiosk/ios/BusKiosk.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRP_Kiosk/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Kiosk/ios/Podfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRP_Kiosk/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Kiosk/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRP_Kiosk/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Kiosk/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRP_Kiosk/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Kiosk/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRP_Kiosk/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/GRP_Kiosk/yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/GRP_Bus_Server">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="grp-bus-server" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/GRP_Bus_Server/Dockerfile" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/configuration/WebSocketConfiguration.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/controller/AuthenticatedPassengerController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/dto/PassengerVerificationDto.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/dto/ResponseDto.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/repository/PassengerRepository.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/service/NotificationService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GRP_Bus_Server/src/main/java/dev/chk/BusServiceApplication/service/impl/NotificationServiceImpl.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GRP_Bus_Server/src/main/resources/application.yaml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GRP_Bus_Server/src/main/resources/db/changelog/db.changelog-master.yaml" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2Y3RoY5gT5ws2oQRO4CHCucow56" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/chayakornk/Documents/Documents/Github/Digital_BUS/GRP_Bus_Server/src/main/resources/db/changelog/liquibase-tran",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.notifications"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/GRP_Bus_Server/src/main/resources/db/changelog/liquibase-tran" />
+      <recent name="$PROJECT_DIR$/GRP_Bus_Server/src/main/resources" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="dev.chk.BusServiceApplication.repository" />
+      <recent name="dev.chk.BusServiceApplication.dto" />
+      <recent name="dev.chk.BusServiceApplication.mapper" />
+      <recent name="dev.chk.BusServiceApplication.model" />
+      <recent name="dev.chk.BusServiceApplication.service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Docker.GRP_Bus_Server: Compose Deployment">
+    <configuration name="GRP_Bus_Server: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="GRP_Bus_Server/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="GRP_Bus_Server/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="GRP_Bus_Server/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="GRP_Bus_Server.grp-bus-db: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="grp-bus-db" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="GRP_Bus_Server/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="GRP_Bus_Server.grp-bus-server: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="grp-bus-server" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="GRP_Bus_Server/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.GRP_Bus_Server: Compose Deployment" />
+        <item itemvalue="Docker.GRP_Bus_Server.grp-bus-server: Compose Deployment" />
+        <item itemvalue="Docker.GRP_Bus_Server.grp-bus-db: Compose Deployment" />
+        <item itemvalue="Docker.GRP_Bus_Server/Dockerfile" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="adb75e24-c92a-44f5-865f-9c1e4f928ab0" name="Changes" comment="" />
+      <created>1699752451984</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1699752451984</updated>
+    </task>
+    <task id="LOCAL-00001" summary="switch logic">
+      <created>1700525942369</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1700525942369</updated>
+    </task>
+    <task id="LOCAL-00002" summary="finish with kiosk">
+      <created>1700793814941</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1700793814941</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add get recommendation feature">
+      <created>1701043743266</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1701043743266</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fix purchase a card request payload">
+      <created>1701064578589</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1701064578589</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="switch logic" />
+    <MESSAGE value="finish with kiosk" />
+    <MESSAGE value="add get recommendation feature" />
+    <MESSAGE value="fix purchase a card request payload" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix purchase a card request payload" />
+  </component>
+</project>

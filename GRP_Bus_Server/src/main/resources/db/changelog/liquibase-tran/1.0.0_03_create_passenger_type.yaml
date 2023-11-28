@@ -1,0 +1,230 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_passenger_type_table
+      author: chayakorn.k
+      changes:
+        - createTable:
+            tableName: passenger_type
+            columns:
+              - column:
+                  name: passenger_type_seqnum
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: passenger_type_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passenger_type_valid_type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passenger_type_valid_for
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passenger_type_price
+                  type: int
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create_passenger_type_criteria_table
+      author: chayakorn.k
+      changes:
+        - createTable:
+            tableName: passenger_type_criteria
+            columns:
+              - column:
+                  name: passenger_type_criteria_seqnum
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: passenger_type_seqnum
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_passenger_type_seqnum_criteria
+                    referencedColumnNames: passenger_type_seqnum
+                    referencedTableName: passenger_type
+              - column:
+                  name: passenger_type_description_code
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passenger_type_description
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - insert:
+            tableName: passenger_type
+            columns:
+              - column:
+                  name: passenger_type_name
+                  value: "Student Card"
+              - column:
+                  name: passenger_type_valid_type
+                  value: "Unlimited"
+              - column:
+                  name: passenger_type_valid_for
+                  value: 30
+              - column:
+                  name: passenger_type_price
+                  value: 40
+        - insert:
+            tableName: passenger_type
+            columns:
+              - column:
+                  name: passenger_type_name
+                  value: "Student Card"
+              - column:
+                  name: passenger_type_valid_type
+                  value: "Unlimited"
+              - column:
+                  name: passenger_type_valid_for
+                  value: 90
+              - column:
+                  name: passenger_type_price
+                  value: 82
+        - insert:
+            tableName: passenger_type
+            columns:
+              - column:
+                  name: passenger_type_name
+                  value: "Young Card"
+              - column:
+                  name: passenger_type_valid_type
+                  value: "Unlimited"
+              - column:
+                  name: passenger_type_valid_for
+                  value: 90
+              - column:
+                  name: passenger_type_price
+                  value: 60
+        - insert:
+            tableName: passenger_type
+            columns:
+              - column:
+                  name: passenger_type_name
+                  value: "Adult Card"
+              - column:
+                  name: passenger_type_valid_type
+                  value: "Unlimited"
+              - column:
+                  name: passenger_type_valid_for
+                  value: 90
+              - column:
+                  name: passenger_type_price
+                  value: 78
+        - insert:
+            tableName: passenger_type
+            columns:
+              - column:
+                  name: passenger_type_name
+                  value: "Adult Card"
+              - column:
+                  name: passenger_type_valid_type
+                  value: "Unlimited"
+              - column:
+                  name: passenger_type_valid_for
+                  value: 30
+              - column:
+                  name: passenger_type_price
+                  value: 60
+        - insert:
+            tableName: passenger_type
+            columns:
+              - column:
+                  name: passenger_type_name
+                  value: "Senior Card"
+              - column:
+                  name: passenger_type_valid_type
+                  value: "Unlimited"
+              - column:
+                  name: passenger_type_valid_for
+                  value: 90
+              - column:
+                  name: passenger_type_price
+                  value: 50
+        - insert:
+            tableName: passenger_type_criteria
+            columns:
+              - column:
+                  name: passenger_type_seqnum
+                  value: 1
+              - column:
+                  name: passenger_type_description_code
+                  value: "1"
+              - column:
+                  name: passenger_type_description
+                  value: "a student including post secondary level student"
+        - insert:
+            tableName: passenger_type_criteria
+            columns:
+              - column:
+                  name: passenger_type_seqnum
+                  value: 2
+              - column:
+                  name: passenger_type_description_code
+                  value: "1"
+              - column:
+                  name: passenger_type_description
+                  value: "a student including post secondary level student"
+        - insert:
+            tableName: passenger_type_criteria
+            columns:
+              - column:
+                  name: passenger_type_seqnum
+                  value: 3
+              - column:
+                  name: passenger_type_description_code
+                  value: "2"
+              - column:
+                  name: passenger_type_description
+                  value: "14 - 18 years old, as of today"
+        - insert:
+            tableName: passenger_type_criteria
+            columns:
+              - column:
+                  name: passenger_type_seqnum
+                  value: 6
+              - column:
+                  name: passenger_type_description_code
+                  value: "3"
+              - column:
+                  name: passenger_type_description
+                  value: "65+ years old, as of today"
+        - insert:
+            tableName: passenger_type_criteria
+            columns:
+              - column:
+                  name: passenger_type_seqnum
+                  value: 4
+              - column:
+                  name: passenger_type_description_code
+                  value: "99"
+              - column:
+                  name: passenger_type_description
+                  value: "None"
+        - insert:
+            tableName: passenger_type_criteria
+            columns:
+              - column:
+                  name: passenger_type_seqnum
+                  value: 5
+              - column:
+                  name: passenger_type_description_code
+                  value: "99"
+              - column:
+                  name: passenger_type_description
+                  value: "None"
+

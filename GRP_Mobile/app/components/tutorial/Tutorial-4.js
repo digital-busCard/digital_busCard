@@ -1,0 +1,45 @@
+import LottieView from 'lottie-react-native';
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
+import { Button, Icon, Text, View } from 'react-native-ui-lib';
+import bus from "../../../assets/bus.json";
+import { Colors } from '../../constant/Colors';
+import { TutorialStyles } from '../../constant/CommonStyle';
+import { checkOnboard, saveOnBoardConfig } from '../../external/config';
+
+const Tutorial4 = ({navigation}) => {
+
+  function completeOnboard() {
+    saveOnBoardConfig();
+    if (checkOnboard) {
+      navigation.navigate('Home')
+    } else {
+        navigation.navigate('Purchase1')
+    }
+  }
+
+  return (
+    <View style={TutorialStyles.container}>
+       <View style={TutorialStyles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <View style={TutorialStyles.backContainer}><Icon source={require('../../../assets/back.webp')} size={40} tintColor={Colors.white}/></View>
+        </TouchableOpacity>
+        <View style={TutorialStyles.titleContainer}><Text style={TutorialStyles.title}>Almost Done!</Text></View>
+      </View>
+      <View style={TutorialStyles.suggestionContainer}>
+        <Text style={TutorialStyles.page}>4 / 4</Text>
+        <Text style={TutorialStyles.suggestion}>When the bus arrive, enter the bus</Text>
+        <Text style={TutorialStyles.suggestion}>Click confirm & Enjoy the ride!</Text>
+
+      </View>
+      <View style={TutorialStyles.loop}>
+        <LottieView style={TutorialStyles.maxWidth} source={bus} autoPlay={true} loop/>
+      </View>
+      <View style={TutorialStyles.footer}>
+        <Button style={TutorialStyles.primaryButton} label="Done" labelStyle={TutorialStyles.primaryLabel} backgroundColor={Colors.primary} onPress={() => completeOnboard()}/>
+      </View>
+    </View>
+  )
+}
+
+export default Tutorial4
