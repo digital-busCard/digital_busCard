@@ -5,13 +5,17 @@ import { Button, Icon, Text, View } from 'react-native-ui-lib';
 import bus from "../../../assets/bus.json";
 import { Colors } from '../../constant/Colors';
 import { TutorialStyles } from '../../constant/CommonStyle';
-import { saveOnBoardConfig } from '../../external/config';
+import { checkOnboard, saveOnBoardConfig } from '../../external/config';
 
 const Tutorial4 = ({navigation}) => {
 
   function completeOnboard() {
     saveOnBoardConfig();
-    navigation.navigate('Purchase1')
+    if (checkOnboard) {
+      navigation.navigate('Home')
+    } else {
+        navigation.navigate('Purchase1')
+    }
   }
 
   return (
@@ -32,7 +36,7 @@ const Tutorial4 = ({navigation}) => {
         <LottieView style={TutorialStyles.maxWidth} source={bus} autoPlay={true} loop/>
       </View>
       <View style={TutorialStyles.footer}>
-        <Button style={TutorialStyles.primaryButton} label="Done" labelStyle={TutorialStyles.primaryLabel} backgroundColor={Colors.primary} onPress={() => navigation.navigate('Purchase1')}/>
+        <Button style={TutorialStyles.primaryButton} label="Done" labelStyle={TutorialStyles.primaryLabel} backgroundColor={Colors.primary} onPress={() => completeOnboard()}/>
       </View>
     </View>
   )
